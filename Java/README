@@ -1,0 +1,42 @@
+アルゴリズムとデータ構造
+
+01array.java から順番に *.javaを習熟して下さい。
+ソースを転記する事から始めて、見ないで実行できるレベルになったら次へ進みます。
+javaでのアルゴリズムの仕組みを理解したらjavaディレクトリ内の、
+
+Bashによるアルゴリズムとデータ構造も併せて習熟すると良いです。
+https://github.com/suzukiiichiro/AI_Algorithm_Bash
+
+lua版もあります。
+https://github.com/suzukiiichiro/AI_Algorithm_Lua
+
+
+アルゴリズムとデータ構造１
+
+   1. データ構造
+      <>配列          01array.java
+
+   2. 簡単なソート                             
+      <>バブルソート  02_1BubbleSort.java
+      <>選択ソート    02_2SelectionSort.java
+      <>挿入ソート    02_3InsertionSort.java
+
+   3. データ構造                               
+      <>スタック      03_1Stack.java
+      <>キュー        03_1Queque.java
+      <>円環キュー    03_1CircularQueue.java
+
+アルゴリズムとデータ構造２                     
+
+   4. 再帰                                     
+      <>階乗値        04_1Factorial.java
+      <>ユークリッド  04_2Euclid.java
+      <>三角数        04_3Trianglar.java
+      <>ハノイの塔    04_4Hanoi.java
+
+   5. 高度なソート                             
+      <>マージソート  05_1MergeSort.java
+      <>シェルソート  05_2ShellSort.java
+      <>クイックソート05_3-1QuickSort.java
+      <>クイックソート05_3-2QuickSort.java
+      <>クイックソート05_3-3QuickSort.java
