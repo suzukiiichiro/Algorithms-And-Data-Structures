@@ -1,6 +1,6 @@
 アルゴリズムとデータ構造
 
-01array.sh から順番に *.shを習熟して下さい。
+01_1array.c から順番に *.cを習熟して下さい。
 ソースを転記する事から始めて、見ないで実行できるレベルになったら次へ進みます。
 bashでのアルゴリズムの仕組みを理解したらjavaディレクトリ内の、
 javaによるアルゴリズムとデータ構造も併せて習熟すると良いです。
@@ -12,32 +12,32 @@ javaによるアルゴリズムとデータ構造も併せて習熟すると良�
 アルゴリズムとデータ構造１
 
    1. データ構造
-      <>配列          01_1array.sh               
+      <>配列          01_1array.c               
 
    2. 簡単なソート                             
-      <>バブルソート  02_1BubbleSort.sh        
-      <>選択ソート    02_2SelectionSort.sh     
-      <>挿入ソート    02_3InsertionSort.sh     
+      <>バブルソート  02_1BubbleSort.c        
+      <>選択ソート    02_2SelectionSort.c     
+      <>挿入ソート    02_3InsertionSort.c     
 
    3. データ構造                               
-      <>スタック      03_1Stack.sh             
-      <>キュー        03_1Queque.sh            
-      <>円環キュー    03_1CircularQueue.sh     
+      <>スタック      03_1Stack.c             
+      <>キュー        03_1Queque.c            
+      <>円環キュー    03_1CircularQueue.c     
 
 アルゴリズムとデータ構造２                     
 
    4. 再帰                                     
-      <>階乗値        04_1Factorial.sh         
-      <>ユークリッド  04_2Euclid.sh            
-      <>三角数        04_3Trianglar.sh         
-      <>ハノイの塔    04_4Hanoi.sh             
-      <>ハノイ可視化版04_5Hanoi.sh
+      <>階乗値        04_1Factorial.c         
+      <>ユークリッド  04_2Euclid.c            
+      <>三角数        04_3Trianglar.c         
+      <>ハノイの塔    04_4Hanoi.c             
+      <>ハノイ可視化版04_5Hanoi.c
 
    5. 高度なソート                             
-      <>マージソート  05_1MergeSort.sh         
-      <>シェルソート  05_2ShellSort.sh         
-      <>クイックソート05_3QuickSort.sh         
+      <>マージソート  05_1MergeSort.c         
+      <>シェルソート  05_2ShellSort.c         
+      <>クイックソート05_3QuickSort.c         
 
    6. ソートアルゴリズムまとめ
-      <>ソート比較    06SortAlgorithm.sh
+      <>ソート比較    06SortAlgorithm.c
 
