@@ -1,43 +1,94 @@
 アルゴリズムとデータ構造
 
-01array.sh から順番に *.shを習熟して下さい。
+1-01fibonacci.py から順番に *.pyを習熟して下さい。
 ソースを転記する事から始めて、見ないで実行できるレベルになったら次へ進みます。
-bashでのアルゴリズムの仕組みを理解したらjavaディレクトリ内の、
-javaによるアルゴリズムとデータ構造も併せて習熟すると良いです。
+pythonでのアルゴリズムの仕組みを理解したらjavaディレクトリ内の、javaによるアルゴリズムとデータ構造も併せて習熟すると良いです。
 
-はじめに
-   ShellScript(bash)  000BashBasic
-   UNIXという考え方   001UNIXBasic
+  1-01fibonacci.py
+  1-02tax_rate.py
+  1-03long_sentence.py
+  1-04url.py
+  1-05url_list.py
+  1-06scope.py
+  1-07scope1.py
+  1-08scope2.py
+  1-09scope3.py
+  1-10scope4.py
+  1-11scope5.py
+  1-13calc.py
+  1-14list_array.py
+  2-01even.py
+  2-02fizzbuzz1.py
+  2-03fizzbuzz2.py
+  2-04fizzbuzz3.py
+  2-05fizzbuzz4.py
+  2-06fizzbuzz5.py
+  2-07vending_machine1.py
+  2-08vending_machine2.py
+  2-09vending_machine3.py
+  2-10vending_machine4.py
+  2-11vending_machine5.py
+  2-12convert1.py
+  2-13convert2.py
+  2-14convert3.py
+  2-15convert4.py
+  2-16convert5.py
+  2-17is_prime1.py
+  2-18is_prime2.py
+  2-19eratosthenes.py
+  2-20sympy1.py
+  2-21sympy2.py
+  2-22fibonacci1.py
+  2-23fibonacci2.py
+  2-24fibonacci3.py
+  2-25fibonacci4.py
+  3-01fizzbuzz1.py
+  3-02fizzbuzz5.py
+  3-03multi1.py
+  3-04multi2.py
+  4-01linear_search1.py
+  4-02linear_search2.py
+  4-03binary_search.py
+  4-04breadth_search.py
+  4-05depth_search1.py
+  4-06depth_search2.py
+  4-07depth_search3.py
+  4-08depth_search4.py
+  4-09maze.py
+  4-10maze2.py
+  4-11maze3.py
+  4-12queen.py
+  4-13hanoi.py
+  4-15search_file1.py
+  4-16search_file2.py
+  4-17marubatsu1.py
+  4-18marubatsu2.py
+  4-19marubatsu3.py
+  5-01search_min.py
+  5-02select_sort.py
+  5-03insert_sort.py
+  5-04bubble_sort.py
+  5-05bubble_sort2.py
+  5-06stack.py
+  5-07queue.py
+  5-08heap_sort.py
+  5-09heap_sort2.py
+  5-10heap_sort3.py
+  5-11merge_sort.py
+  5-12quick_sort.py
+  5-13quick_sort2.py
+  6-01near_route1.py
+  6-02near_route2.py
+  6-03bellman_ford.py
+  6-04dijkstra.py
+  6-05dijkstra2.py
+  6-06dijkstra3.py
+  6-07dijkstra4.py
+  6-08astar.py
+  6-09calc.py
+  6-09search_string.py
+  6-10search_string_bm.py
+  6-11gcd1.py
+  6-12gcd2.py
 
-アルゴリズムとデータ構造１
-
-   1. データ構造
-      <>配列          01_1array.sh               
-
-   2. 簡単なソート                             
-      <>バブルソート  02_1BubbleSort.sh        
-      <>選択ソート    02_2SelectionSort.sh     
-      <>挿入ソート    02_3InsertionSort.sh     
-
-   3. データ構造                               
-      <>スタック      03_1Stack.sh             
-      <>キュー        03_1Queque.sh            
-      <>円環キュー    03_1CircularQueue.sh     
-
-アルゴリズムとデータ構造２                     
-
-   4. 再帰                                     
-      <>階乗値        04_1Factorial.sh         
-      <>ユークリッド  04_2Euclid.sh            
-      <>三角数        04_3Trianglar.sh         
-      <>ハノイの塔    04_4Hanoi.sh             
-      <>ハノイ可視化版04_5Hanoi.sh
-
-   5. 高度なソート                             
-      <>マージソート  05_1MergeSort.sh         
-      <>シェルソート  05_2ShellSort.sh         
-      <>クイックソート05_3QuickSort.sh         
-
-   6. ソートアルゴリズムまとめ
-      <>ソート比較    06SortAlgorithm.sh
 
