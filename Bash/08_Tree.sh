@@ -3,6 +3,7 @@
 root="";
 ### Utility functions to generate a BST ###
 # Define set 'methods'
+#setメソッドはインスタンスのgetterメソッドを動的に生成する
 set_node_left() {
 	eval "${1}.getLeftChild()  { echo "$2"; }"
 }
@@ -13,6 +14,7 @@ set_node_value() {
 	eval "${1}.getValue()      { echo "$2"; }"
 }
 # Generate unique id:
+#インスタンスのユニークなidを生成する
 gen_uid() {
 	# prefix 'id' to the uid generated to guarentee
 	# it starts with chars, and hence will work as a
@@ -20,6 +22,7 @@ gen_uid() {
 	echo "id$(uuidgen|tr -d '-')";
 }
 # Generates a new node 'object'
+#インスタンスを生成する
 function new_node() {
 	local node_id="$1";
 	local value="$2";
@@ -33,22 +36,25 @@ function new_node() {
 function theTree_insert(){
   local value=$1;
   local id=$(gen_uid);
+  #nodeのインスタンスを生成する。
   eval "new_node $id $value";
+  #最初にルートを設定する（初回のinsertの時だけ動く）
   if [ -z "$root" ];then
     #ルートから手順を開始する。
     root=$id;
   else
+    #ルートノードから値を比較しながら下のノードに移動していく 
     current=$root;
     parent="";
     while true;do
       parent=$current;
       #着目しているノードと目的の値を比較する。
       #目的の値 < 着目しているノード」なら左の子が、次の着目ノードとなる。
-      if [ "$value" -le $(${current}.getValue) ];then
+      if [ "$value" -lt $(${current}.getValue) ];then
         current=$(eval ${current}.getLeftChild);
         #存在すれば、次の着目ノードに移って繰り返し。
         if [ -z "$current" ];then
-          #次の着目ノードが存在しなければ（現在の着目ノードが葉であれば）、次の着目ノードの位置にデータを挿入。
+          #次の着目ノードが存在しなければ（現在の着目ノードが葉であれば）、一つ前の着目ノード(parent)の左(leftChild)位置にデータを挿入。
           set_node_left $parent $id;
           return;
         fi
@@ -57,7 +63,7 @@ function theTree_insert(){
         current=$(eval ${current}.getRightChild);
         #存在すれば、次の着目ノードに移って繰り返し。
         if [ -z "$current" ];then
-          #次の着目ノードが存在しなければ（現在の着目ノードが葉であれば）、次の着目ノードの位置にデータを挿入。
+          #次の着目ノードが存在しなければ（現在の着目ノードが葉であれば）、一つ前の着目ノード(parent)の右(rightChild)位置にデータを挿入。
           set_node_right $parent $id;
           return;
         fi
