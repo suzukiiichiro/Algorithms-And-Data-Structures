@@ -2,6 +2,51 @@
 #バイナリーサーチを実装
 root="";
 ### Utility functions to generate a BST ###
+
+function globalStack.push() {
+    globalarr+=($1)
+    #echo pushed: $1
+}
+
+function globalStack.pop() {
+    if [ ${#globalarr[*]} == 0 ];then
+      echo "";
+      return;
+    fi
+    local el=${globalarr[${#globalarr[*]}-1]}
+    po=$((${#globalarr[*]}-1))
+    unset globalarr[$po]
+    echo $el
+}
+function globalStack.isEmpty() {
+  if [ ${#globalarr[*]} == 0 ];then
+    echo "true";
+  else
+    echo "false"
+  fi
+}
+function localStack.push() {
+    localarr+=($1)
+    #echo pushed: $1
+}
+
+function localStack.pop() {
+    if [ ${#localarr[*]} == 0 ];then
+      echo "";
+      return;
+    fi
+    local el=${localarr[${#localarr[*]}-1]}
+    po=$((${#localarr[*]}-1))
+    unset localarr[$po]
+    echo $el
+}
+function localStack.isEmpty() {
+  if [ ${#localarr[*]} == 0 ];then
+    echo "true";
+  else
+    echo "false"
+  fi
+}
 # Define set 'methods'
 #setメソッドはインスタンスのgetterメソッドを動的に生成する
 set_node_left() {
@@ -20,6 +65,58 @@ gen_uid() {
 	# it starts with chars, and hence will work as a
 	# bash variable
 	echo "id$(uuidgen|tr -d '-')";
+}
+###
+function display_Tree(){
+
+globalarr=();
+globalStack.push "$root";
+nBlanks=32;
+isRowEmpty="false";
+echo "......................................................"
+while [ $isRowEmpty == "false" ];do
+  localarr=();
+  isRowEmpty="true"
+  for ((j=0; j<nBlanks; j++));do
+    echo -n " ";
+  done
+  while [ $(globalStack.isEmpty)=="false" ];do
+    temp=$(globalStack.pop);
+    if [ "$temp" != "null" ];then
+      echo -n $(${temp}.getValue)
+      rc=$(eval ${temp}.getRightChild);
+      if [ "$rc" == "" ];then
+        rc="null";
+      fi
+      lc=$(eval ${temp}.getLeftChild);
+      if [ "$lc" == "" ];then
+        lc="null";
+      fi
+      localStack.push "$lc"  
+      localStack.push "$rc"  
+      if [[ "$rc" != "null" ]]||[[ "$lc" != "null" ]];then
+        isRowEmpty="false"
+      fi
+    else
+      echo -n "--"
+      localStack.push "null";
+      localStack.push "null"
+    fi
+    nBlanks2=$((nBlanks*2-2));
+    for ((j=0; j<nBlanks2; j++));do
+      echo -n " ";
+    done
+    echo ""
+    nBlanks=$((nBlanks/2))
+    while [ $(localStack.isEmpty) == "false" ];do
+      lp=$(localStack.pop);
+      localStack.pop
+      globalStack.push "$lp" 
+    done
+    echo ""......................................................""
+  done 
+done
+
 }
 # Generates a new node 'object'
 #インスタンスを生成する
@@ -115,7 +212,7 @@ function main(){
 
   theTree_find "12";
 
-   
+  display_Tree;   
 
 }
 
