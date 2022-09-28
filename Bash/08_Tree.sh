@@ -16,6 +16,14 @@ function globalStack.pop() {
     local el=${globalarr[${#globalarr[*]}-1]}
     po=$((${#globalarr[*]}-1))
     unset globalarr[$po]
+}
+function globalStack.peek() {
+    if [ ${#globalarr[*]} == 0 ];then
+      echo "";
+      return;
+    fi
+    local el=${globalarr[${#globalarr[*]}-1]}
+    po=$((${#globalarr[*]}-1))
     echo $el
 }
 function globalStack.isEmpty() {
@@ -38,6 +46,14 @@ function localStack.pop() {
     local el=${localarr[${#localarr[*]}-1]}
     po=$((${#localarr[*]}-1))
     unset localarr[$po]
+}
+function localStack.peek() {
+    if [ ${#localarr[*]} == 0 ];then
+      echo "";
+      return;
+    fi
+    local el=${localarr[${#localarr[*]}-1]}
+    po=$((${#localarr[*]}-1))
     echo $el
 }
 function localStack.isEmpty() {
@@ -74,15 +90,16 @@ globalStack.push "$root";
 nBlanks=32;
 isRowEmpty="false";
 echo "......................................................"
-while [ $isRowEmpty == "false" ];do
+while [[ $isRowEmpty == "false" ]];do
   localarr=();
   isRowEmpty="true"
   for ((j=0; j<nBlanks; j++));do
     echo -n " ";
   done
-  while [ $(globalStack.isEmpty)=="false" ];do
-    temp=$(globalStack.pop);
-    if [ "$temp" != "null" ];then
+  while [[ $(globalStack.isEmpty) == "false" ]];do
+    temp=$(globalStack.peek);
+    globalStack.pop
+    if [ "$temp" != "null" ]&&[ "$temp" != "" ];then
       echo -n $(${temp}.getValue)
       rc=$(eval ${temp}.getRightChild);
       if [ "$rc" == "" ];then
@@ -106,16 +123,16 @@ while [ $isRowEmpty == "false" ];do
     for ((j=0; j<nBlanks2; j++));do
       echo -n " ";
     done
-    echo ""
-    nBlanks=$((nBlanks/2))
-    while [ $(localStack.isEmpty) == "false" ];do
-      lp=$(localStack.pop);
-      localStack.pop
-      globalStack.push "$lp" 
-    done
-    echo ""......................................................""
+  done
+  echo ""
+  nBlanks=$((nBlanks/2))
+  while [[ `localStack.isEmpty` == "false" ]];do
+    lp=$(localStack.peek);
+    localStack.pop
+    globalStack.push "$lp" 
   done 
 done
+echo ""......................................................""
 
 }
 # Generates a new node 'object'
