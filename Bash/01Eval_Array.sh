@@ -57,7 +57,7 @@
 # こうした追加・削除の操作は以降のソートの処理で学びますので、ここではデータ配列を生成する処理を覚えます。
 # 
 ################
-
+#オブジェクトの生成部分
 #
 set_node_value() {
 	eval "arr_${1}.getValue()      { echo "$2"; }"
@@ -81,6 +81,7 @@ function display(){
   for((i=0;i<nElems;i++));do
       echo "display nElems:$i"
       echo -n "uID:"
+      #displayはオブジェクトのgetメソッドを呼び出す 
       eval "arr_$(($i)).getUid";
       echo -n "value:"
       eval "arr_$(($i)).getValue";
@@ -92,6 +93,7 @@ function display(){
 #
 function insert(){
   echo "insert nElems:$nElems uID:$1 value:$2" 
+  #挿入はオブジェクトを生成する
   new_Array $((nElems++)) "$1" "$2"
 }
 ##
