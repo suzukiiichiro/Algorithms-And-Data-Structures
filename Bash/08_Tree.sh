@@ -2,15 +2,14 @@
 #バイナリーサーチを実装
 root="";
 ### Utility functions to generate a BST ###
-
+#スタックの関数を追加した。配列ごとに別メソッドで作ったがevalでまとめた方が良さそう
 function globalStack.push() {
     globalarr+=($1)
-    #echo pushed: $1
 }
 
 function globalStack.pop() {
     if [ ${#globalarr[*]} == 0 ];then
-      echo "";
+      echo "null";
       return;
     fi
     local el=${globalarr[${#globalarr[*]}-1]}
@@ -19,7 +18,7 @@ function globalStack.pop() {
 }
 function globalStack.peek() {
     if [ ${#globalarr[*]} == 0 ];then
-      echo "";
+      echo "null";
       return;
     fi
     local el=${globalarr[${#globalarr[*]}-1]}
@@ -40,7 +39,7 @@ function localStack.push() {
 
 function localStack.pop() {
     if [ ${#localarr[*]} == 0 ];then
-      echo "";
+      echo "null";
       return;
     fi
     local el=${localarr[${#localarr[*]}-1]}
@@ -49,7 +48,7 @@ function localStack.pop() {
 }
 function localStack.peek() {
     if [ ${#localarr[*]} == 0 ];then
-      echo "";
+      echo "null";
       return;
     fi
     local el=${localarr[${#localarr[*]}-1]}
@@ -97,21 +96,15 @@ while [[ $isRowEmpty == "false" ]];do
     echo -n " ";
   done
   while [[ $(globalStack.isEmpty) == "false" ]];do
+    #サブシェルでpopメソッドを呼び出しても配列の削除が反映されないので
+    #peekメソッドを別に作った。
     temp=$(globalStack.peek);
     globalStack.pop
-    if [ "$temp" != "null" ]&&[ "$temp" != "" ];then
+    if [ "$temp" != "null" ];then
       echo -n $(${temp}.getValue)
-      rc=$(eval ${temp}.getRightChild);
-      if [ "$rc" == "" ];then
-        rc="null";
-      fi
-      lc=$(eval ${temp}.getLeftChild);
-      if [ "$lc" == "" ];then
-        lc="null";
-      fi
-      localStack.push "$lc"  
-      localStack.push "$rc"  
-      if [[ "$rc" != "null" ]]||[[ "$lc" != "null" ]];then
+      localStack.push $(eval ${temp}.getLeftChild);  
+      localStack.push $(eval ${temp}.getRightChild);  
+      if [[ $(eval ${temp}.getRightChild) != "null" ]]||[[ $(eval ${temp}.getLeftChild) != "null" ]];then
         isRowEmpty="false"
       fi
     else
@@ -126,10 +119,9 @@ while [[ $isRowEmpty == "false" ]];do
   done
   echo ""
   nBlanks=$((nBlanks/2))
-  while [[ `localStack.isEmpty` == "false" ]];do
-    lp=$(localStack.peek);
+  while [[ $(localStack.isEmpty) == "false" ]];do
+    globalStack.push $(localStack.peek) 
     localStack.pop
-    globalStack.push "$lp" 
   done 
 done
 echo ""......................................................""
@@ -151,7 +143,7 @@ function theTree_insert(){
   local value=$1;
   local id=$(gen_uid);
   #nodeのインスタンスを生成する。
-  eval "new_node $id $value";
+  eval "new_node $id $value null null";
   #最初にルートを設定する（初回のinsertの時だけ動く）
   if [ -z "$root" ];then
     #ルートから手順を開始する。
@@ -159,7 +151,7 @@ function theTree_insert(){
   else
     #ルートノードから値を比較しながら下のノードに移動していく 
     current=$root;
-    parent="";
+    parent="null";
     while true;do
       parent=$current;
       #着目しているノードと目的の値を比較する。
@@ -167,7 +159,7 @@ function theTree_insert(){
       if [ "$value" -lt $(${current}.getValue) ];then
         current=$(eval ${current}.getLeftChild);
         #存在すれば、次の着目ノードに移って繰り返し。
-        if [ -z "$current" ];then
+        if [ "$current" == "null" ];then
           #次の着目ノードが存在しなければ（現在の着目ノードが葉であれば）、一つ前の着目ノード(parent)の左(leftChild)位置にデータを挿入。
           set_node_left $parent $id;
           return;
@@ -176,7 +168,7 @@ function theTree_insert(){
       else
         current=$(eval ${current}.getRightChild);
         #存在すれば、次の着目ノードに移って繰り返し。
-        if [ -z "$current" ];then
+        if [ "$current" == "null" ];then
           #次の着目ノードが存在しなければ（現在の着目ノードが葉であれば）、一つ前の着目ノード(parent)の右(rightChild)位置にデータを挿入。
           set_node_right $parent $id;
           return;
@@ -186,8 +178,8 @@ function theTree_insert(){
   fi  
 }
 function theTree_find(){
-  echo "find start"
   key=$1;
+  echo "find start $key"
   current="$root";
   echo "root:$(${root}.getValue)"
   while [ $(${current}.getValue) != "$key" ] ;do
@@ -198,12 +190,11 @@ function theTree_find(){
       echo "go right"
       current=$(eval ${current}.getRightChild);
     fi
-    if [ -z "$current" ];then
+    if [ "$current" == "null" ];then
       echo "null" #didn't find it
       return;
     fi
-
-    echo $(${current}.getValue)#found it
+    echo $(${current}.getValue) #found it
 
   done
   echo "####"
