@@ -90,7 +90,7 @@ function new_node() {
 	local right="$4";
 	eval "${node_id}set='set'";
 	set_node_value "$node_id" "$value";
-	set_node_left "$node_id" "$right";
+	set_node_left "$node_id" "$left";
 	set_node_right "$node_id" "$right";
 }
 ###
