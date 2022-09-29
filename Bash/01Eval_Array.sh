@@ -57,39 +57,28 @@
 # こうした追加・削除の操作は以降のソートの処理で学びますので、ここではデータ配列を生成する処理を覚えます。
 # 
 ################
-##
-# <>display 
+
 #
-function display(){
-  for((i=0;i<nElems;i++));do
-      echo "$i" "${array[i]}";
-  done
-  echo "------";
+##
+function new_Array(){
+  local node_id="$1";
+  local value="$2";
+  set_node_value "$node_id" "$value";
+
 }
-##
-# <> insert
-#
-function insert(){
-  array[((nElems++))]=$1;
-}
-##
-# <> set Array
-#
-function setArray(){
+function main(){
   nElems=0;
-  for((i=0;i<$1;i++));do
-      insert `echo "$RANDOM"`;
+  #0番目から順番に挿入する
+  for((nElems=0;nElems<$1;nElems++));do
+    new_Array "$nElems" "$RANDOM"
+  done 
+　#挿入した値を出力する　
+  for((i=0;i<nElems;i++));do
+      #new_Arrayで作ったメソッドを呼び出す
+      eval "arr_$(($i)).getValue";
   done
 }
-##
-# <>execArray()
-#
-function execArray(){
-  setArray $1;
-  display;
-}
-##
-#
-time execArray 10;
+main 10;
+
 exit;
 
