@@ -74,21 +74,45 @@ function new_Array(){
   set_node_value "$node_id" "$value";
 
 }
-function main(){
-  nElems=0;
-  #0番目から順番に挿入する
-  for((nElems=0;nElems<$1;nElems++));do
-    local uID=$(uuidgen|tr -d '-');
-    new_Array "$nElems" "$uID" "$RANDOM"
-  done 
-  #挿入した値を出力する　
+##
+# <>display 
+#
+function display(){
   for((i=0;i<nElems;i++));do
-      #new_Arrayで作ったメソッドを呼び出す
-      eval "arr_$(($i)).getValue";
+      echo "display nElems:$i"
+      echo -n "uID:"
       eval "arr_$(($i)).getUid";
+      echo -n "value:"
+      eval "arr_$(($i)).getValue";
+  done
+  echo "------";
+}
+##
+# <> insert
+#
+function insert(){
+  echo "insert nElems:$nElems uID:$1 value:$2" 
+  new_Array $((nElems++)) "$1" "$2"
+}
+##
+# <> set Array
+#
+function setArray(){
+  nElems=0;
+  for((i=0;i<$1;i++));do
+      local uID=$(uuidgen|tr -d '-');
+      insert $uID `echo "$RANDOM"`;
   done
 }
-main 10;
-
+##
+# <>execArray()
+#
+function execArray(){
+  setArray $1;
+  display;
+}
+##
+#
+time execArray 10;
 exit;
 
