@@ -59,10 +59,18 @@
 ################
 
 #
+set_node_value() {
+	eval "arr_${1}.getValue()      { echo "$2"; }"
+}
+set_node_uid() {
+	eval "arr_${1}.getUid()      { echo "$2"; }"
+}
 ##
 function new_Array(){
   local node_id="$1";
-  local value="$2";
+  local uid="$2";
+  local value="$3";
+  set_node_uid "$node_id" "$uid";
   set_node_value "$node_id" "$value";
 
 }
@@ -70,12 +78,14 @@ function main(){
   nElems=0;
   #0番目から順番に挿入する
   for((nElems=0;nElems<$1;nElems++));do
-    new_Array "$nElems" "$RANDOM"
+    local uID=$(uuidgen|tr -d '-');
+    new_Array "$nElems" "$uID" "$RANDOM"
   done 
-　#挿入した値を出力する　
+  #挿入した値を出力する　
   for((i=0;i<nElems;i++));do
       #new_Arrayで作ったメソッドを呼び出す
       eval "arr_$(($i)).getValue";
+      eval "arr_$(($i)).getUid";
   done
 }
 main 10;
