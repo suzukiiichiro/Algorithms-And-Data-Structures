@@ -128,14 +128,6 @@ function setID(){
 	eval "aRray[$Elem].getID()         { echo "$ID"; }"
 }
 ##
-# 配列の要素に値を代入
-function update(){
-  local el=$1;
-  local ID=$2;          #100からの連番
-  local value=$3;       #配列に代入される要素の値
-  setID     "$el"    "$ID";      #IDをセット
-  setValue  "$el"    "$value";   #Valueをセット
-}
 # <> insert
 # 配列の要素に値を代入
 function insert(){
@@ -165,8 +157,10 @@ function bubbleSort(){
       (($(aRray[$j].getValue)>$(aRray[$((j+1))].getValue)))&&{
         tmp_id=$(aRray[$j].getID);
         tmp_value=$(aRray[$j].getValue);
-        update $j $(aRray[$((j+1))].getID) $(aRray[$((j+1))].getValue)
-        update $((j+1)) "$tmp_id" "$tmp_value"
+        setID     "$j"    $(aRray[$((j+1))].getID);      #IDをセット
+        setValue  "$j"    $(aRray[$((j+1))].getValue);   #Valueをセット
+        setID     $((j+1))    $tmp_id;      #IDをセット
+        setValue  $((j+1))    $tmp_value;   #Valueをセット
       }
     done
   done  
