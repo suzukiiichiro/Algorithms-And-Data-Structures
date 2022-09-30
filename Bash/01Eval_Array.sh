@@ -60,10 +60,10 @@
 #オブジェクトの生成部分
 #
 set_node_value() {
-	eval "arr_${1}.getValue()      { echo "$2"; }"
+	eval "aNode[${1}].getValue()      { echo "$2"; }"
 }
 set_node_uid() {
-	eval "arr_${1}.getUid()      { echo "$2"; }"
+	eval "aNode[${1}].getUid()      { echo "$2"; }"
 }
 ##
 function new_Array(){
@@ -82,9 +82,9 @@ function display(){
       echo "display nElems:$i"
       echo -n "uID:"
       #displayはオブジェクトのgetメソッドを呼び出す 
-      eval "arr_$(($i)).getUid";
+      eval "aNode[$(($i))].getUid";
       echo -n "value:"
-      eval "arr_$(($i)).getValue";
+      eval "aNode[$(($i))].getValue";
   done
   echo "------";
 }
