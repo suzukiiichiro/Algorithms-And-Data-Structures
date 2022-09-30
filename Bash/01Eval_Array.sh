@@ -112,6 +112,9 @@ function setArray(){
 function execArray(){
   setArray $1;
   display;
+  echo "単体での出力";
+  aNode[4].getUid;
+  aNode[4].getValue;
 }
 ##
 #
