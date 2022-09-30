@@ -95,6 +95,11 @@
 # O(N2乗) （ビッグオー規格では定数は含めない）
 # 比較 O(N2乗) 入れ替え O(N2乗) 
 #
+#######################################
+# 02_1BubbleSort.shを、少しだけオブジェクティブに
+# aRray[0].getValue() で値を取得できるように改変した
+# 配列にIDと値を入れるだけのbashスクリプト
+#######################################
 ##
 # グローバル変数
 declare -i nElems=0;
@@ -150,32 +155,39 @@ function setArray(){
   }
 }
 ##
-#
+# <>bubbleSort() 
+# バブルソート
 function bubbleSort(){
-  for((i=nElems;i>0;i--));do
-    for((j=0;j<i-1;j++));do
-      (($(aRray[$j].getValue)>$(aRray[$((j+1))].getValue)))&&{
+  local tmp_id;
+  local tmp_value;
+  for((i=nElems;i>0;i--)){
+    for((j=0;j<i-1;j++)){
+      if(($(aRray[$j].getValue)>$(aRray[$((j+1))].getValue)));then
+        # 交換
         tmp_id=$(aRray[$j].getID);
         tmp_value=$(aRray[$j].getValue);
         setID     "$j"    $(aRray[$((j+1))].getID);      #IDをセット
         setValue  "$j"    $(aRray[$((j+1))].getValue);   #Valueをセット
         setID     $((j+1))    $tmp_id;      #IDをセット
         setValue  $((j+1))    $tmp_value;   #Valueをセット
-      }
-    done
-  done  
+        # 交換
+      fi 
+    } 
+  }  
 }
 ##
-#
+# <>execSort()
+# メインルーチン
 function execSort(){
-  setArray $1;
-  echo "before"
+  local N=$1;
+  setArray $N;    #配列をセット
+  echo "修正前"
   display;
-  bubbleSort;
-  echo "after"
+  bubbleSort;     # バブルソート
+  echo "修正後"
   display;
 }
 ##
-#
+# 実行
 time execSort 10;
 exit;
