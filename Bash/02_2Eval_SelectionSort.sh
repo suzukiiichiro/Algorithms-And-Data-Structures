@@ -175,7 +175,8 @@ function bubbleSort(){
     } 
   }  
 }
-##
+## <>selectionSort()
+# 選択ソート
 function selectionSort(){
   local tmp_id;
   local tmp_value;
@@ -186,12 +187,14 @@ function selectionSort(){
         min=$j;
       fi
     }
+    # 交換
     tmp_id=$(aRray[$min].getID);
     tmp_value=$(aRray[$min].getValue);
     setID     "$min"    $(aRray[$i].getID);      #IDをセット
     setValue  "$min"    $(aRray[$i].getValue);   #Valueをセット
     setID     $i    $tmp_id;      #IDをセット
     setValue  $i    $tmp_value;   #Valueをセット
+    # 交換
   }
 }
 ##
@@ -202,7 +205,7 @@ function execSort(){
   setArray $N;    #配列をセット
   echo "修正前"
   display;
-  selectionSort;  #selectionソート
+  selectionSort;  #選択ソート
   echo "修正後"
   display;
 }
