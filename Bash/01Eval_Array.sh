@@ -56,68 +56,76 @@
 #
 # こうした追加・削除の操作は以降のソートの処理で学びますので、ここではデータ配列を生成する処理を覚えます。
 # 
-################
-#オブジェクトの生成部分
 #
-set_node_value() {
-	eval "aNode[${1}].getValue()      { echo "$2"; }"
-}
-set_node_uid() {
-	eval "aNode[${1}].getUid()      { echo "$2"; }"
-}
-##
-function new_Array(){
-  local node_id="$1";
-  local uid="$2";
-  local value="$3";
-  set_node_uid "$node_id" "$uid";
-  set_node_value "$node_id" "$value";
-
-}
-##
-# <>display 
+#######################################
+# 01Array.shを、少しだけオブジェクティブに
+# aRray[0].getValue() で値を取得できるように改変した
+# 配列にIDと値を入れるだけのbashスクリプト
+#######################################
 #
+# グローバル変数
+declare -i nElems=0;
+##
+# <>display()  
+# 配列を表示
 function display(){
-  for((i=0;i<nElems;i++));do
-      echo "display nElems:$i"
-      echo -n "uID:"
-      #displayはオブジェクトのgetメソッドを呼び出す 
-      eval "aNode[$(($i))].getUid";
-      echo -n "value:"
-      eval "aNode[$(($i))].getValue";
-  done
-  echo "------";
+  for((i=0;i<nElems;i++)){
+    echo -n "aRray[$i]  \
+    ID: " $( aRray[$i].getID ) " \
+    Value:" $( aRray[$i].getValue ) ; 
+    echo "";
+  }
+}
+##
+# <>setValue() 
+# セッター
+function setValue() {
+  #今後挿入や置き換えに備えてnElemsとは別の変数を用意しておく
+  local Elem="$1";      
+  local value="$2";
+	eval "aRray[$Elem].getValue()      { echo "$value"; }"
+}
+##
+# <>setID()
+# セッター
+function setID(){
+  #今後挿入や置き換えに備えてnElemsとは別の変数を用意しておく
+  local Elem="$1";      
+  local ID="$2";
+	eval "aRray[$Elem].getID()         { echo "$ID"; }"
 }
 ##
 # <> insert
-#
+# 配列の要素に値を代入
 function insert(){
-  echo "insert nElems:$nElems uID:$1 value:$2" 
-  #挿入はオブジェクトを生成する
-  new_Array $((nElems++)) "$1" "$2"
+  local ID=$1;          #100からの連番
+  local value=$2;       #配列に代入される要素の値
+  setID     "$nElems"    "$ID";      #IDをセット
+  setValue  "$nElems"    "$value";   #Valueをセット
+  ((nElems++));
 }
 ##
 # <> set Array
-#
+# 配列を作成
 function setArray(){
-  nElems=0;
-  for((i=0;i<$1;i++));do
-      local uID=$(uuidgen|tr -d '-');
-      insert $uID `echo "$RANDOM"`;
-  done
+  local N=$1;           #すべての要素数
+  local ID=100;         #100からの連番
+  local value;          #配列に代入される要素の値
+  for((i=0;i<N;i++)){
+    value=$( echo $RANDOM );
+    insert $((ID++)) $value;
+  }
 }
 ##
 # <>execArray()
-#
+# メインルーチン
 function execArray(){
-  setArray $1;
-  display;
-  echo "単体での出力";
-  aNode[4].getUid;
-  aNode[4].getValue;
+  local N=$1;           #要素数
+  setArray $N           #配列にセット
+  display;              #表示
 }
 ##
+# 実行
 #
 time execArray 10;
 exit;
-
