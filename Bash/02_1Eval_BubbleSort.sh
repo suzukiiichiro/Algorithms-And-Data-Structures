@@ -96,35 +96,77 @@
 # 比較 O(N2乗) 入れ替え O(N2乗) 
 #
 ##
+# グローバル変数
+declare -i nElems=0;
 #
+# <>display()  
+# 配列を表示
 function display(){
-  for((n=0;n<nElems;n++));do
-    echo "$n" "${array[n]}";
-  done
-  echo "------";
+  for((i=0;i<nElems;i++)){
+    echo -n "aRray[$i]  \
+    ID: " $( aRray[$i].getID ) " \
+    Value:" $( aRray[$i].getValue ) ; 
+    echo "";
+  }
 }
 ##
-#
+# <>setValue() 
+# セッター
+function setValue() {
+  #今後挿入や置き換えに備えてnElemsとは別の変数を用意しておく
+  local Elem="$1";      
+  local value="$2";
+	eval "aRray[$Elem].getValue()      { echo "$value"; }"
+}
+##
+# <>setID()
+# セッター
+function setID(){
+  #今後挿入や置き換えに備えてnElemsとは別の変数を用意しておく
+  local Elem="$1";      
+  local ID="$2";
+	eval "aRray[$Elem].getID()         { echo "$ID"; }"
+}
+##
+# 配列の要素に値を代入
+function update(){
+  local el=$1;
+  local ID=$2;          #100からの連番
+  local value=$3;       #配列に代入される要素の値
+  setID     "$el"    "$ID";      #IDをセット
+  setValue  "$el"    "$value";   #Valueをセット
+}
+# <> insert
+# 配列の要素に値を代入
 function insert(){
-  array[nElems++]="$1";
+  local ID=$1;          #100からの連番
+  local value=$2;       #配列に代入される要素の値
+  setID     "$nElems"    "$ID";      #IDをセット
+  setValue  "$nElems"    "$value";   #Valueをセット
+  ((nElems++));
 }
 ##
-#
+# <> set Array
+# 配列を作成
 function setArray(){
-  nElems=0;
-  for((i=0;i<$1;i++));do
-    insert $(echo "$RANDOM");
-  done
+  local N=$1;           #すべての要素数
+  local ID=100;         #100からの連番
+  local value;          #配列に代入される要素の値
+  for((i=0;i<N;i++)){
+    value=$( echo $RANDOM );
+    insert $((ID++)) $value;
+  }
 }
 ##
 #
 function bubbleSort(){
   for((i=nElems;i>0;i--));do
     for((j=0;j<i-1;j++));do
-      ((array[j]>${array[j+1]}))&&{
-        tmp=${array[j]};
-        array[j]=${array[j+1]};
-        array[j+1]=$tmp;
+      (($(aRray[$j].getValue)>$(aRray[$((j+1))].getValue)))&&{
+        tmp_id=$(aRray[$j].getID);
+        tmp_value=$(aRray[$j].getValue);
+        update $j $(aRray[$((j+1))].getID) $(aRray[$((j+1))].getValue)
+        update $((j+1)) "$tmp_id" "$tmp_value"
       }
     done
   done  
@@ -133,8 +175,10 @@ function bubbleSort(){
 #
 function execSort(){
   setArray $1;
+  echo "before"
   display;
   bubbleSort;
+  echo "after"
   display;
 }
 ##
