@@ -157,6 +157,7 @@ function setArray(){
 ##
 # <>bubbleSort() 
 # バブルソート
+# URL:https://www.youtube.com/watch?v=xli_FI7CuzA
 function bubbleSort(){
   local tmp_id;
   local tmp_value;
