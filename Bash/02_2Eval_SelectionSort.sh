@@ -157,6 +157,7 @@ function setArray(){
 ##
 # <>bubbleSort() 
 # バブルソート
+# URL:
 function bubbleSort(){
   local tmp_id;
   local tmp_value;
@@ -177,6 +178,7 @@ function bubbleSort(){
 }
 ## <>selectionSort()
 # 選択ソート
+# URL:
 function selectionSort(){
   local tmp_id;
   local tmp_value;
@@ -205,6 +207,7 @@ function execSort(){
   setArray $N;    #配列をセット
   echo "修正前"
   display;
+  #bubbleSort;     #バブルソート
   selectionSort;  #選択ソート
   echo "修正後"
   display;
