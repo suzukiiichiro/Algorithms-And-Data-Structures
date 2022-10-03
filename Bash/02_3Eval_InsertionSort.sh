@@ -190,11 +190,11 @@ function insertionSort(){
   local tmp_id;
   local tmp_value;
   for((out=1;out<nElems;out++)){
-    if [ $(aRray[$((out-1))].getValue)>$(aRray[$out].getValue) ];then
+    if [[ $(aRray[$((out-1))].getValue) > $(aRray[$out].getValue) ]];then
       tmp_id=$(aRray[$out].getID);
       tmp_value=$(aRray[$out].getValue);
       in=$out;
-      while((in>0))&&(($(aRray[$((in-1))].getValue)>tmp_value));do
+      while (( in > 0 ))&&(( $(aRray[$((in-1))].getValue) > tmp_value ));do
         setID     "$in"    $(aRray[$((in-1))].getID);      #IDをセット
         setValue  "$in"    $(aRray[$((in-1))].getValue);   #Valueをセット
         in=$((in-1));
