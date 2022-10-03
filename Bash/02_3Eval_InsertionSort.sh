@@ -193,14 +193,12 @@ function insertionSort(){
     if [ $(aRray[$((out-1))].getValue)>$(aRray[$out].getValue) ];then
       tmp_id=$(aRray[$out].getID);
       tmp_value=$(aRray[$out].getValue);
-      for((in=out;in>0&&$(aRray[$((in-1))].getValue)>tmp_value;in--)){
+      in=$out;
+      while((in>0))&&(($(aRray[$((in-1))].getValue)>tmp_value));do
         setID     "$in"    $(aRray[$((in-1))].getID);      #IDをセット
         setValue  "$in"    $(aRray[$((in-1))].getValue);   #Valueをセット
-        if [ "$in" == 1 ];then
-          in=0;
-          break;
-        fi
-      }
+        in=$((in-1));
+      done 
       setID     "$in"    $tmp_id;      #IDをセット
       setValue  "$in"    $tmp_value;   #Valueをセット
     fi
