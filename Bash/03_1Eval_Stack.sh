@@ -75,69 +75,6 @@ function setArray(){
   }
 }
 ##
-# <>bubbleSort() 
-# バブルソート
-# URL:https://www.youtube.com/watch?v=xli_FI7CuzA
-function bubbleSort(){
-  local tmp_id;
-  local tmp_value;
-  for((i=nElems;i>0;i--)){
-    for((j=0;j<i-1;j++)){
-      if(($(aRray[$j].getValue)>$(aRray[$((j+1))].getValue)));then
-        # 交換
-        tmp_id=$(aRray[$j].getID);
-        tmp_value=$(aRray[$j].getValue);
-        setID     "$j"    $(aRray[$((j+1))].getID);      #IDをセット
-        setValue  "$j"    $(aRray[$((j+1))].getValue);   #Valueをセット
-        setID     $((j+1))    $tmp_id;      #IDをセット
-        setValue  $((j+1))    $tmp_value;   #Valueをセット
-        # 交換
-      fi 
-    } 
-  }  
-}
-## <>selectionSort()
-# 選択ソート
-# URL:https://www.youtube.com/watch?v=g-PGLbMth_g
-function selectionSort(){
-  local tmp_id;
-  local tmp_value;
-  for((i=0;i<nElems;i++)){
-    min=$i;
-    for((j=i+1;j<nElems;j++)){
-      if(($(aRray[$min].getValue)>$(aRray[$j].getValue)));then
-        min=$j;
-      fi
-    }
-    # 交換
-    tmp_id=$(aRray[$min].getID);
-    tmp_value=$(aRray[$min].getValue);
-    setID     "$min"    $(aRray[$i].getID);      #IDをセット
-    setValue  "$min"    $(aRray[$i].getValue);   #Valueをセット
-    setID     $i    $tmp_id;      #IDをセット
-    setValue  $i    $tmp_value;   #Valueをセット
-    # 交換
-  }
-}
-##
-## <>insertionSort()
-# 挿入ソート
-# URL:https://www.youtube.com/watch?v=DFG-XuyPYUQ
-function insertionSort(){
-  local tmp_id;
-  local tmp_value;
-  for((out=1;out<nElems;out++));do
-    tmp_id=$(aRray[$out].getID);
-    tmp_value=$(aRray[$out].getValue);
-    for((in=out;in>0&&$(aRray[$((in-1))].getValue)>tmp_value;in--));do
-      setID     "$in"    $(aRray[$((in-1))].getID);      #IDをセット
-      setValue  "$in"    $(aRray[$((in-1))].getValue);   #Valueをセット
-    done
-    setID     "$in"    $tmp_id;      #IDをセット
-    setValue  "$in"    $tmp_value;   #Valueをセット
-  done
-}
-##
 #
 function stackPeek(){
   echo "$1 : $((nElems-1)):$(aRray[$((nElems-1))].getValue)";
@@ -147,7 +84,7 @@ function stackPeek(){
 function stackPush(){
   local value=$( echo $RANDOM );
   local ID=$(aRray[$((nElems-1))].getID)
-  insert $((ID+1)) $value;
+  insert $((ID++)) $value;
   stackPeek "push";
 }
 ##
