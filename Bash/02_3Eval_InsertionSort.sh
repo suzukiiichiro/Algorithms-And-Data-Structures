@@ -27,7 +27,7 @@
 # 済　済
 # 3   5   4   7   2   8   6   9   1
 # 
-# 同様に左端の数字を取り出し
+# 同様に済になっていない左端の数字を取り出し
 #
 # 済　済  ↓
 # 3   5   4   7   2   8   6   9   1
@@ -185,19 +185,26 @@ function selectionSort(){
 ## <>insertionSort()
 # 挿入ソート
 # URL:https://www.youtube.com/watch?v=DFG-XuyPYUQ
+cnt=0;
 function insertionSort(){
   local tmp_id;
   local tmp_value;
-  for((out=1;out<nElems;out++));do
-    tmp_id=$(aRray[$out].getID);
-    tmp_value=$(aRray[$out].getValue);
-    for((in=out;in>0&&$(aRray[$((in-1))].getValue)>tmp_value;in--));do
-      setID     "$in"    $(aRray[$((in-1))].getID);      #IDをセット
-      setValue  "$in"    $(aRray[$((in-1))].getValue);   #Valueをセット
-    done
-    setID     "$in"    $tmp_id;      #IDをセット
-    setValue  "$in"    $tmp_value;   #Valueをセット
-  done
+  for((out=1;out<nElems;out++)){
+    if [ $(aRray[$((out-1))].getValue)>$(aRray[$out].getValue) ];then
+      tmp_id=$(aRray[$out].getID);
+      tmp_value=$(aRray[$out].getValue);
+      for((in=out;in>0&&$(aRray[$((in-1))].getValue)>tmp_value;in--)){
+        setID     "$in"    $(aRray[$((in-1))].getID);      #IDをセット
+        setValue  "$in"    $(aRray[$((in-1))].getValue);   #Valueをセット
+        if [ "$in" == 1 ];then
+          in=0;
+          break;
+        fi
+      }
+      setID     "$in"    $tmp_id;      #IDをセット
+      setValue  "$in"    $tmp_value;   #Valueをセット
+    fi
+  } 
 }
 # <>execSort()
 # メインルーチン
