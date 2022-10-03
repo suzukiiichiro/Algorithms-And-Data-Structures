@@ -23,6 +23,7 @@
 ##
 # グローバル変数
 declare -i nElems=0;
+declare -i rear=0;
 #
 # <>display()  
 # 配列を表示
@@ -92,8 +93,9 @@ function dequeue(){
 function enqueue(){
   ID=$1;
   value=$2;
-  insert "$ID" "$value"
-  rear=$nElems;
+  setID     "$rear"    "$ID";      #IDをセット
+  setValue  "$rear"    "$value";   #Valueをセット
+  ((rear++));
 }
 ##
 #
