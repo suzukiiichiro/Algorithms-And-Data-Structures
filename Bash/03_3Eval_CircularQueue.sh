@@ -129,20 +129,17 @@ function execCircularQ(){
   echo "データを4つenqueue";
   CircularQPeek;
   CircularQDisplay;
-#exit;
   #----
   CircularQDequeue;
   CircularQDequeue;
   echo "データを2つdequeue";
   CircularQPeek;
   CircularQDisplay;
-#exit;
   #----
   CircularQEnqueue $((ID++)) 50;
   echo "データを1つenqueue";
   CircularQPeek;
   CircularQDisplay;
-#exit;
   #----
   # CircularQ
   CircularQEnqueue $((ID++)) 60;
@@ -150,7 +147,6 @@ function execCircularQ(){
   echo "データを2つenqueue";
   CircularQPeek;
   CircularQDisplay;
-#exit;
   #---
   CircularQDequeue;
   CircularQDequeue;
