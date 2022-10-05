@@ -100,13 +100,13 @@ function setArray(){
 ##
 #
 function insertionSort(){
-  for((out=1;out<nElems;out++));do
-    tmp=${array[out]};
-    for((in=out;in>0&&array[in-1]>tmp;in--));do
-      array[in]=${array[in-1]};
-    done
+  for((out=1;out<nElems;out++)){
+    tmp=$((array[out]));
+    for((in=out;in>0 && array[in-1]>tmp;in--)){
+      array[in]=$((array[in-1]));
+    }
     array[in]=$tmp;
-  done
+  }
 }
 ##
 #
