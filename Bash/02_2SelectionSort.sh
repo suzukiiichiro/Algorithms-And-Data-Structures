@@ -122,7 +122,9 @@ selectionSort(){
   for((i=0;i<nElems;i++));do
     min=$i;
     for((j=i+1;j<nElems;j++));do
-      ((array[min]>array[j]))&&{ min=$j; }
+      if (( array[min] > array[j] ));then
+        min=$j;
+      fi
     done
     tmp=${array[min]};
     array[min]=${array[i]};
