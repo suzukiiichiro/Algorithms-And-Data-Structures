@@ -121,11 +121,11 @@ function setArray(){
 function bubbleSort(){
   for((i=nElems;i>0;i--));do
     for((j=0;j<i-1;j++));do
-      ((array[j]>${array[j+1]}))&&{
+      if (( array[j] > array[j+1] ));then
         tmp=${array[j]};
         array[j]=${array[j+1]};
         array[j+1]=$tmp;
-      }
+      fi
     done
   done  
 }
