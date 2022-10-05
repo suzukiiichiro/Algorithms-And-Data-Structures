@@ -78,7 +78,7 @@
 #
 ##
 #######################################
-# 02_3InsertionSort.shを、少しだけオブジェクティブに
+# 少しだけオブジェクティブに
 # aRray[0].getValue() で値を取得できるように改変した
 # 配列にIDと値を入れるだけのbashスクリプト
 #######################################
@@ -189,11 +189,12 @@ cnt=0;
 function insertionSort(){
   local tmp_id;
   local tmp_value;
+  local in;
   for((out=1;out<nElems;out++)){
      tmp_id=$(aRray[$out].getID);
      tmp_value=$(aRray[$out].getValue);
      in=$out;
-     while (( in > 0 ))&&(( $(aRray[$((in-1))].getValue) > tmp_value ));do
+     while (( in>0 )) && (( $(aRray[$((in-1))].getValue)>tmp_value ));do
        setID     "$in"    $(aRray[$((in-1))].getID);      #IDをセット
        setValue  "$in"    $(aRray[$((in-1))].getValue);   #Valueをセット
        in=$((in-1));
