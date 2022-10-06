@@ -25,16 +25,6 @@
 declare -i nElems=0;
 declare -i rear=0;
 #
-# <>display()  
-# 配列を表示
-function display(){
-  for((i=0;i<nElems;i++)){
-    echo -n "aRray[$i]  \
-    ID: " $( aRray[$i].getID ) " \
-    Value:" $( aRray[$i].getValue ) ; 
-    echo "";
-  }
-}
 ##
 # <>setValue() 
 # セッター
@@ -54,29 +44,8 @@ function setID(){
 	eval "aRray[$Elem].getID()         { echo "$ID"; }"
 }
 ##
-# <> insert
-# 配列の要素に値を代入
-function insert(){
-  local ID=$1;          #100からの連番
-  local value=$2;       #配列に代入される要素の値
-  setID     "$nElems"    "$ID";      #IDをセット
-  setValue  "$nElems"    "$value";   #Valueをセット
-  ((nElems++));
-}
-##
-# <> set Array
-# 配列を作成
-function setArray(){
-  local N=$1;           #すべての要素数
-  local ID=100;         #100からの連番
-  local value;          #配列に代入される要素の値
-  for((i=0;i<N;i++)){
-    value=$( echo $RANDOM );
-    insert $((ID++)) $value;
-  }
-}
-##
-#
+# <>queueDisplay()
+# 表示
 function queueDisplay(){
   for((i=front;i<rear;i++));do
       echo "$i" "$(aRray[$i].getValue)";
@@ -84,12 +53,14 @@ function queueDisplay(){
   echo "------";
 }
 ##
-#
+# <>dequeue()
+# デキュー
 function dequeue(){
   ((front++));
 }
 ##
-#
+# <>enqueue()
+# エンキュー
 function enqueue(){
   ID=$1;
   value=$2;
@@ -98,13 +69,14 @@ function enqueue(){
   ((rear++));
 }
 ##
-#
+# <>peek()
+# ピーク
 function peek(){
   echo "peek :"$front : $(aRray[$front].getValue);
 }
 ##
-#
-# メインルーチン
+# <>execQueue()
+# キューの実行
 function execQueue(){
   rear=0;   #後ろ端（enqueueされるほう）
   front=0;  #前端（peek/dequeueされるほう)
@@ -130,7 +102,6 @@ function execQueue(){
   #----
 }
 ##
-#
-# 実行
+# メイン
 execQueue;
 exit;

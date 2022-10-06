@@ -13,31 +13,9 @@
 # このような、先に入れたものを先に出す先入れ先出しの仕組みを
 # 「First In First Out」を略してFIFOと呼びます。
 # 
-#########
-#
 ##
-#
-function display(){
-  for((n=0;n<nElems;n++));do
-    echo "$n" "${array[n]}";
-  done
-  echo "------";
-}
-##
-#
-function insert(){
-  array[nElems++]="$1";
-}
-##
-#
-function setArray(){
-  nElems=0;
-  for((i=0;i<$1;i++));do
-    insert $(echo "$RANDOM");
-  done
-}
-##
-#
+# <>queueDisplay()
+# 表示
 function queueDisplay(){
   for((i=front;i<rear;i++));do
       echo "$i" "${queue[i]}";
@@ -45,22 +23,26 @@ function queueDisplay(){
   echo "------";
 }
 ##
-#
+# <>dequeue()
+# デキュー
 function dequeue(){
   ((front++));
 }
 ##
-#
+# <>enqueue()
+# エンキュー
 function enqueue(){
   queue[rear++]=$1;
 }
 ##
-#
+# <>peek()
+# ピーク
 function peek(){
   echo "peek :"$front : ${queue[front]};
 }
 ##
-#
+# <>execQueue()
+# キューの実行
 function execQueue(){
   rear=0;   #後ろ端（enqueueされるほう）
   front=0;  #前端（peek/dequeueされるほう)
@@ -85,6 +67,6 @@ function execQueue(){
   #----
 }
 ##
-#
+# メイン
 execQueue;
 exit;
