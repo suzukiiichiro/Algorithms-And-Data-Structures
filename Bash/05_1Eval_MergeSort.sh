@@ -235,7 +235,7 @@ mergeSortLogic(){
     #マージする列が２つある場合
     while (("$lowPtr" <= "$_mid" && "$highPtr" <= "$_upperBound" ));do
         #小さい値をコピー
-        if(($(aRray[$lowPtr].getValue)>$(aRray[$highPtr].getValue)));then
+        if(($(aRray[$lowPtr].getValue)<$(aRray[$highPtr].getValue)));then
             setWID     "$j"    $(aRray[$lowPtr].getID);      #IDをセット
             setWvalue  "$j"    $(aRray[$lowPtr].getValue);   #Valueをセット
             ((lowPtr++));
