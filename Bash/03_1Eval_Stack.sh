@@ -22,12 +22,12 @@
 #######################################
 ##
 # グローバル変数
-declare -i nElems=0;
+declare -i peek=0;
 #
 # <>display()  
 # 配列を表示
 function display(){
-  for((i=0;i<nElems;i++)){
+  for((i=0;i<peek;i++)){
     echo -n "aRray[$i]  \
     ID: " $( aRray[$i].getID ) " \
     Value:" $( aRray[$i].getValue ) ; 
@@ -38,7 +38,7 @@ function display(){
 # <>setValue() 
 # セッター
 function setValue() {
-  #今後挿入や置き換えに備えてnElemsとは別の変数を用意しておく
+  #今後挿入や置き換えに備えてpeekとは別の変数を用意しておく
   local Elem="$1";      
   local value="$2";
 	eval "aRray[$Elem].getValue()      { echo "$value"; }"
@@ -47,58 +47,40 @@ function setValue() {
 # <>setID()
 # セッター
 function setID(){
-  #今後挿入や置き換えに備えてnElemsとは別の変数を用意しておく
+  #今後挿入や置き換えに備えてpeekとは別の変数を用意しておく
   local Elem="$1";      
   local ID="$2";
 	eval "aRray[$Elem].getID()         { echo "$ID"; }"
 }
 ##
-# <> insert
-# 配列の要素に値を代入
-function insert(){
-  local ID=$1;          #100からの連番
-  local value=$2;       #配列に代入される要素の値
-  setID     "$nElems"    "$ID";      #IDをセット
-  setValue  "$nElems"    "$value";   #Valueをセット
-  ((nElems++));
-}
-##
-# <> set Array
-# 配列を作成
-function setArray(){
-  local N=$1;           #すべての要素数
-  local ID=100;         #100からの連番
-  local value;          #配列に代入される要素の値
-  for((i=0;i<N;i++)){
-    value=$( echo $RANDOM );
-    insert $((ID++)) $value;
-  }
-}
-##
-#
+# stackPeek()
+# ピーク
 function stackPeek(){
-  echo "$1 : $((nElems-1)):$(aRray[$((nElems-1))].getValue)";
+  echo "$1 : $((peek-1)):$(aRray[$((peek-1))].getValue)";
 }
 ##
-#
+# stackPush()
+# プッシュ
 function stackPush(){
   local value=$( echo $RANDOM );
-  local ID=$(aRray[$((nElems-1))].getID)
+  local ID=$(aRray[$((peek-1))].getID)
   insert $((ID++)) $value;
   stackPeek "push";
 }
 ##
-#
+# <>stackPop()
+# ポップ
 function stackPop(){
-  if(($nElems!=0));then
+  if(($peek!=0));then
     stackPeek "pop";
-    ((nElems--));
+    ((peek--));
   else
     echo "Stack is empty";
   fi 
 }
 ##
-#
+# <>stack()
+# スタックの処理を明示的に手続き型で書いています。
 function stack(){
   display;
   stackPop;
@@ -120,6 +102,28 @@ function stack(){
   display; 
   stackPop;
   stackPop;# Empty
+}
+##
+# <> insert
+# 配列の要素に値を代入
+function insert(){
+  local ID=$1;          #100からの連番
+  local value=$2;       #配列に代入される要素の値
+  setID     "$peek"    "$ID";      #IDをセット
+  setValue  "$peek"    "$value";   #Valueをセット
+  ((peek++));
+}
+##
+# <> set Array
+# 配列を作成
+function setArray(){
+  local N=$1;           #すべての要素数
+  local ID=100;         #100からの連番
+  local value;          #配列に代入される要素の値
+  for((i=0;i<N;i++)){
+    value=$( echo $RANDOM );
+    insert $((ID++)) $value;
+  }
 }
 ##
 #
