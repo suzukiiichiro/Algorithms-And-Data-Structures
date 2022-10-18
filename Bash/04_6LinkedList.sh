@@ -14,25 +14,30 @@
 #
 ########################################
 
-## 準備
-# demoディレクトリにノードデータを配置
-# mkdir demo
+
+## 準備すべき４つのファイル
+## 実行ファイル（このファイル）と同じ場所に４つのファイルを配置してください。
 ##
-# demo/list1
-# node1
-# 3
+
+: '
+## list1
+node1
+3
 ##
-# demo/node1
-# node2
-# foo
+## node1
+node2
+foo
 ##
-# demo/node2
-# node3
-# bar
+## node2
+node3
+bar
 ##
-# demo/node3
-# none
-# !
+## node3
+none
+!
+';
+
+
 ##
 ## 
 # addAtIdx()
