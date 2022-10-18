@@ -218,6 +218,8 @@ function insertionSort(){
   } 
 }
 mergeSortLogic(){
+    echo "before merge"
+    display;
     #作業スペースのインデクス
     local j=0; 
     #下半分の部分配列が始まる位置
@@ -236,17 +238,22 @@ mergeSortLogic(){
     while (("$lowPtr" <= "$_mid" && "$highPtr" <= "$_upperBound" ));do
         #小さい値をコピー
         if(($(aRray[$lowPtr].getValue)<$(aRray[$highPtr].getValue)));then
+            echo "low $lowPtr $(aRray[$lowPtr].getValue) < high $highPtr $(aRray[$highPtr].getValue)"
+            echo "$lowPtr $(aRray[$lowPtr].getValue) をworkにセットします"
             setWID     "$j"    $(aRray[$lowPtr].getID);      #IDをセット
             setWvalue  "$j"    $(aRray[$lowPtr].getValue);   #Valueをセット
             ((lowPtr++));
             ((j++)) ;
         else
+            echo "low $lowPtr $(aRray[$lowPtr].getValue) > high $highPtr $(aRray[$highPtr].getValue)"
+            echo "$highPtr $(aRray[$highPtr].getValue) をworkにセットします"
             setWID     "$j"    $(aRray[$highPtr].getID);      #IDをセット
             setWvalue  "$j"    $(aRray[$highPtr].getValue);   #Valueをセット
             ((highPtr++));
             ((j++)) ;
         fi
     done
+    echo "j1:$j"
     #前半分のリスト
     while (( "$lowPtr" <= "$_mid" )); do
         #前半分の要素をそのまま作業用配列にコピー
@@ -255,6 +262,7 @@ mergeSortLogic(){
         ((lowPtr++));
         ((j++)) ;
     done
+    echo "j2:$j"
     #後半分のリスト
     while (( "$highPtr" <= "$_upperBound" )) ; do
         #後半分の要素を逆順に作業用配列にコピー
@@ -263,12 +271,15 @@ mergeSortLogic(){
         ((highPtr++));
         ((j++)) ;
     done
+    echo "j3:$j"
     #昇順に整列するよう１つのリストにまとめる
     #作業用配列の両端から取り出したデータをマージして配列に入れる
     for((j=0; j<$n; j++)); do
         setID     $((_lowerBound+j))    $(wRray[$j].getWID);      #IDをセット
         setValue  $((_lowerBound+j))    $(wRray[$j].getWvalue);   #Valueをセット
     done
+    echo "after merge"
+    display;
 }
 ## <>mergeSort()
 # マージソート
@@ -276,19 +287,30 @@ mergeSortLogic(){
 mergeSort(){
     local lowerBound="$1" ;
     local upperBound="$2" ;
+    echo "0:$lowerBound$upperBound"
+    echo "lower:$lowerBound upper:$upperBound"
     #範囲が１なら再帰呼び出しの終了 基底条件
     if [ "$lowerBound" -eq "$upperBound" ]; then
+        echo "1:$lowerBound$upperBound:範囲が１なら再帰呼び出しの終了 基底条件"
         #ソートは不要
         :
     else
+        echo "2:$lowerBound$upperBound"
         #列を２つに分割する中間点を見つける
         local mid=$(( $((lowerBound+upperBound)) / 2 ));
         #前半分をソート
+        echo "3:$lowerBound$upperBound"
+        echo "mae $lowerBound $mid"
         mergeSort "$lowerBound" "$mid" ;
         #後半分をソート
+        echo "4:$lowerBound$upperBound"
+        echo "usr $((mid+1)) $upperBound"
         mergeSort "$((mid+1))" "$upperBound"
         #両者をマージ
+        echo "5:$lowerBound$upperBound"
+        echo "logic $lowerBound $((mid+1)) $upperBound"
         mergeSortLogic "$lowerBound" "$((mid+1))" "$upperBound" ;
+        echo "6:$lowerBound$upperBound:mergeSortLogicまで到達し再帰終了"
     fi
 }
 # <>execSort()
