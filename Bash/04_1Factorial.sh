@@ -22,12 +22,12 @@
 ##
 #
 function factorial(){
-  (($1==1))&&{
+  local param=$1;
+  if((param==1));then
     echo "1" ;
-  }||{
-    #再帰 n * factorial(n -1)
-    echo $(( $1* $(factorial $(($1-1))) )) ;
-  }
+  else
+    echo $(( param * $(factorial $((param-1))) )) ;
+  fi
 }
 ##
 #

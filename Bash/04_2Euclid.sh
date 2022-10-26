@@ -56,12 +56,15 @@
 # <> gcd()
 # $1:x $2:y
 function gcd(){
-  (($2==0))&&{
-    echo "$1";
-  }||{
-    echo $(gcd $2 $(($1%$2)) ); 
-  }
+  local xValue=$1;
+  local yValue=$2;
+  if(($2==0));then
+    echo "$xValue";
+  else
+    echo $(gcd $yValue $(($xValue % $yValue)) ); 
+  fi
 }
+
 #
 gcd 22 8 ; # 22x8の四角形
 exit ;

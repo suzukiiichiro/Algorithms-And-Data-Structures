@@ -88,7 +88,7 @@ setArray(){
     insert `echo "$RANDOM"` ;
   done
 }
-mergeSortLogic(){
+merge(){
     #作業スペースのインデクス
     local j=0; 
     #下半分の部分配列が始まる位置
@@ -147,7 +147,7 @@ mergeSort(){
         #後半分をソート
         mergeSort "$(($mid+1))" "$upperBound"
         #両者をマージ
-        mergeSortLogic "$lowerBound" "$(($mid+1))" "$upperBound" ;
+        merge "$lowerBound" "$(($mid+1))" "$upperBound" ;
     fi
 }
 execSort(){

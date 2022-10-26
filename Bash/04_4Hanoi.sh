@@ -42,29 +42,38 @@
 # wiki pedia
 # https://ja.wikipedia.org/wiki/ハノイの塔
 #
+##########################
+# ハノイの塔
+# Bash/シェルスクリプト版
+##########################
+declare -i Moves=0;
 ##
-#
+# <>Hanoi()
+# ハノイの塔の再帰処理部分
 function Hanoi() {
-  local n="$1" from="$2" work="$3" dest="$4";
-  ((n==1))&&{
+  local n="$1";
+  local from="$2";
+  local work="$3";
+  local dest="$4";
+  if((n==1));then
     echo "move $from->$dest";         
-  }||{
+  else
     Hanoi "$((n-1))" $from $dest $work; 
     echo "move $from->$dest";         
     Hanoi "$((n-1))" $work $from $dest; 
-  }
+  fi
   ((Moves++));
 }
 ##
-#
+# <>execHanoi()
+# ハノイの塔の実行呼び出し
 function execHanoi(){
-  Moves="0"
   #第二引数から第四引数へ n 枚の円盤を移動
   Hanoi $1 "A" "B" "C";
   echo "Total moves = $Moves";
 }
 ##
-#
+# メイン
 execHanoi 3 ;
 exit;
 #
