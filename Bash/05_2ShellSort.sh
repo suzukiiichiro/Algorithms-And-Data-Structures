@@ -46,49 +46,66 @@
 #　挿入ソート改造版
 #　３倍して１を足すという処理を要素を超えるまで行う
 #
-display(){
-    for((i=0; i<"$nElems"; i++));do
-        echo "$i" "${array["$i"]}";
+##
+# display()
+# 表示
+function display(){
+  for((i=0; i<"$nElems"; i++));do
+    echo "$i" "${array["$i"]}";
+  done
+  echo "------" ;
+}
+##
+# insert()
+# 配列を作成
+function insert(){
+  array[((nElems++))]=$1
+}
+##
+# setArray()
+# 配列をセット
+function setArray(){
+  nElems=0;
+  for((i=0; i<"$1"; i++));do
+      insert `echo "$RANDOM"` ;
+  done
+}
+##
+# shellSort()
+# シェルソート
+function shellSort(){
+  #hの初期値
+  interval=1 ;
+  while (( "$interval" <= "$(($nElems/3))" )); do
+    interval=$(($interval*3+1)) ; # (1,4,13,40,121.....)
+  done
+  #h=1になるまでhを減らす
+  while (( "$interval">0 )); do
+    #hでソート
+    for(( outer="$interval"; outer<"$nElems" ; outer++ )); do
+      tmp="${array[$outer]}" ;
+      inner="$outer" ;
+      #１つの部分的パス(0,4,8)
+      while (( "$inner" > "$(($interval-1))" && "${array[$(($inner-$interval))]}" >= "$tmp" )); do
+        array[$inner]="${array[$(($inner-$interval))]}" ;
+        inner=$(($inner-$interval)) ;
+      done
+      array["$inner"]="$tmp" ;
     done
-    echo "------" ;
+    interval=$(( ($interval-1)/3 )) ;
+  done
 }
-insert(){
-    array[((nElems++))]=$1
+##
+# shellSort()
+# シェルソートの実行
+function execSort(){
+  setArray "$1" ;
+  display ;
+  shellSort ;
+  display ;
 }
-setArray(){
-    nElems=0;
-    for((i=0; i<"$1"; i++));do
-        insert `echo "$RANDOM"` ;
-    done
-}
-shell(){
-    #hの初期値
-    interval=1 ;
-    while (( "$interval" <= "$(($nElems/3))" )); do
-        interval=$(($interval*3+1)) ; # (1,4,13,40,121.....)
-    done
-    #h=1になるまでhを減らす
-    while (( "$interval">0 )); do
-        #hでソート
-        for(( outer="$interval"; outer<"$nElems" ; outer++ )); do
-            tmp="${array[$outer]}" ;
-            inner="$outer" ;
-            #１つの部分的パス(0,4,8)
-            while (( "$inner" > "$(($interval-1))" && "${array[$(($inner-$interval))]}" >= "$tmp" )); do
-                array[$inner]="${array[$(($inner-$interval))]}" ;
-                inner=$(($inner-$interval)) ;
-            done
-            array["$inner"]="$tmp" ;
-        done
-        interval=$(( ($interval-1)/3 )) ;
-    done
-}
-shellSort(){
-    setArray "$1" ;
-    display ;
-    shell ;
-    display ;
-}
-time shellSort 100 ;
+## 
+# メイン
+time execSort 100 ;
 exit ;
 #
