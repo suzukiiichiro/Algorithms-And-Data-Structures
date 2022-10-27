@@ -76,7 +76,8 @@ function setArray(){
 function shellSort(){
   #hの初期値
   interval=1 ;
-  while (( "$interval" <= "$(($nElems/3))" )); do
+  # インターバルを計算
+  while (( "$interval" <= "$(($nElems/9))" )); do
     interval=$(($interval*3+1)) ; # (1,4,13,40,121.....)
   done
   #h=1になるまでhを減らす
@@ -92,6 +93,7 @@ function shellSort(){
       done
       array["$inner"]="$tmp" ;
     done
+    # 間隔を縮める
     interval=$(( ($interval-1)/3 )) ;
   done
 }
