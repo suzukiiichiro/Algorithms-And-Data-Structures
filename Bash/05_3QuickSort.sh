@@ -266,8 +266,10 @@ function exec_QuickSort2(){
 ########################################
 ##
 # pertionIt1()
-# 普通のクイックソートで言うところのソートはこのメソッドで行う
-# 共通メソッドの pertisionIt()とはちょっと内容が異なる
+# 基本形のクイックソートで言うところのソートは
+# このメソッドで行う
+# メジアン・挿入ソート導入版といった共通メソッドの 
+# pertisionIt()とはちょっと内容が異なる
 function pertisionIt1(){
   #最初の成分の右
   local leftPtr=$(($1-1))  ;
@@ -333,9 +335,9 @@ function exec_QuickSort1(){
 ###
 # メイン
 ###
-# クイックソート初期型
+# クイックソート基本型
 time exec_QuickSort1 100 ;
-# クイックソート改良型
+# クイックソート３つのメジアン
 time exec_QuickSort2 100 ;
 # クイックソート挿入ソート導入型
 time exec_QuickSort3 100 ;
