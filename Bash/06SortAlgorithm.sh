@@ -1,21 +1,25 @@
 #!/bin/bash
 
+##########################################
+# Bash(シェルスクリプト)で学ぶアルゴリズムとデータ構造  
+# 一般社団法人共同通信社情報技術局
+# 鈴木  維一郎(suzuki.iichiro@kyodonews.jp)
+#
+#
+# ステップバイステップでアルゴリズムを学ぶ
+# 
+# 目次
+#   ソートアルゴリズム
+#   バブルソート
+#   選択ソート
+#   挿入ソート
+#   マージソート
+#   シェルソート
+#   クイックソート
+#
+##########################################
 ##
- # Bash(シェルスクリプト)で学ぶアルゴリズムとデータ構造  
- # 一般社団法人  共同通信社  情報技術局  鈴木  維一郎(suzuki.iichiro@kyodonews.jp)
- #
- # ステップバイステップでアルゴリズムを学ぶ
- # 
- # 目次
- # 1. ソートアルゴリズム
- #   バブルソート
- #   選択ソート
- #   挿入ソート
- #   マージソート
- #   シェルソート
- #   クイックソート
-
-##
+# display()
 # 共通部分
 function display(){
   for((i=0;i<nElems;i++)){
@@ -23,25 +27,31 @@ function display(){
   }
   echo "-----";
 }
+##
+# insert()
+# 配列を作成
 function insert(){
   array[nElems++]="$1";
 }
+##
+# setArray()
+# 配列をセット
 function setArray(){
   nElems=0;
   for((i=0;i<$1;i++)){
     insert $(echo "$RANDOM");
   }
 }
-
-##
- # 1. バブルソート 13404mm
- # https://ja.wikipedia.org/wiki/バブルソート
- # https://www.youtube.com/watch?v=8Kp-8OGwphY
- #   平均計算時間が O(N^2)
- #   安定ソート
- #   比較回数は「  n(n-1)/2  」
- #   交換回数は「  n^2/2  」
- #   派生系としてシェーカーソートやコムソート
+#
+#############################################
+# 1. バブルソート 13404mm
+# https://ja.wikipedia.org/wiki/バブルソート
+# https://www.youtube.com/watch?v=8Kp-8OGwphY
+#   平均計算時間が O(N^2)
+#   安定ソート
+#   比較回数は「  n(n-1)/2  」
+#   交換回数は「  n^2/2  」
+#   派生系としてシェーカーソートやコムソート
 ##
 function bubbleSort(){
   local i j t;# t:temp
@@ -55,16 +65,18 @@ function bubbleSort(){
     }
   }
 }
-
+#
+##########################################
+# 選択ソート 3294mm
+# https://ja.wikipedia.org/wiki/選択ソート
+# https://www.youtube.com/watch?v=f8hXR_Hvybo
+#   平均計算時間が O(N^2)
+#   安定ソートではない
+#   比較回数は「  n(n-1)/2  」
+#   交換回数は「  n-1  」
 ##
- # 選択ソート 3294mm
- # https://ja.wikipedia.org/wiki/選択ソート
- # https://www.youtube.com/watch?v=f8hXR_Hvybo
- #   平均計算時間が O(N^2)
- #   安定ソートではない
- #   比較回数は「  n(n-1)/2  」
- #   交換回数は「  n-1  」
-##
+# selectionSort()
+# 選択ソート
 function selectionSort(){
   local i j t m;# t:temp m:min
   for((i=0;i<nElems;i++)){
@@ -78,16 +90,18 @@ function selectionSort(){
     array[i]="$t";
   }
 }
-
-##
- # 挿入ソート 3511mm
- # https://ja.wikipedia.org/wiki/挿入ソート
- # https://www.youtube.com/watch?v=DFG-XuyPYUQ
- #   平均計算時間が O(N^2)
- #   安定ソート
- #   比較回数は「  n(n-1)/2以下  」
- #   交換回数は「  約n^2/2以下  」
+#
+##########################################
+# 挿入ソート 3511mm
+# https://ja.wikipedia.org/wiki/挿入ソート
+# https://www.youtube.com/watch?v=DFG-XuyPYUQ
+#   平均計算時間が O(N^2)
+#   安定ソート
+#   比較回数は「  n(n-1)/2以下  」
+#   交換回数は「  約n^2/2以下  」
 ## 
+# insertionSort()
+# 挿入ソート
 function insertionSort(){
   local o i t;# o:out i:in t:temp
   for((o=1;o<nElems;o++)){
@@ -98,24 +112,30 @@ function insertionSort(){
     array[i]="$t";
   }
 }
-
+#
+#############################################
+# マージソート 1085mm
+# https://ja.wikipedia.org/wiki/マージソート
+# https://www.youtube.com/watch?v=EeQ8pwjQxTM
+#   平均計算時間が O(N(Log N))
+#   安定ソート
+#   50以下は挿入ソート、5万以下はマージソート、
+#   あとはクイックソートがおすすめ。
+#   バブルソート、挿入ソート、選択ソートがO(N^2)の
+#   時間を要するのに対し、マージ
+#   ソートはO(N*logN)です。
+#   例えば、N(ソートする項目の数）が10,000ですと、
+#   N^2は100,000,000ですが、
+#   n*logNは40,000です。
+#   別の言い方をすると、マージソートで４０秒を
+#   要するソートは、挿入ソートでは約２８時間かかります。
+#   マージソートの欠点は、ソートする配列と同サイズ
+#   の配列をもう一つ必要とする事です。
+#   元の配列がかろうじてメモリに治まるという大きさ
+#   だったら、マージソートは使えません。
 ##
- # マージソート 1085mm
- # https://ja.wikipedia.org/wiki/マージソート
- # https://www.youtube.com/watch?v=EeQ8pwjQxTM
- #   平均計算時間が O(N(Log N))
- #   安定ソート
- #   50以下は挿入ソート、5万以下はマージソート、あとはクイックソートがおすすめ。
- #   バブルソート、挿入ソート、選択ソートがO(N^2)の時間を要するのに対し、マージ
- #   ソートはO(N*logN)です。
- #   例えば、N(ソートする項目の数）が10,000ですと、N^2は100,000,000ですが、
- #   n*logNは40,000です。別の言い方をすると、マージソートで４０秒を要するソート
- #   は、挿入ソートでは約２８時間かかります。
- #   マージソートの欠点は、ソートする配列と同サイズの配列をもう一つ必要とする事
- #   です。
- #   元の配列がかろうじてメモリに治まるという大きさだったら、マージソートは使え
- #   ません。
-##
+# mergeSortLogic()
+# 
 function mergeSortLogic(){
   local f=$1 m=$2 l=$3;# f:first m:mid l:last w:workArray
   local n i j n1;
@@ -139,6 +159,9 @@ function mergeSortLogic(){
     }
   }
 }
+##
+# mergeSort()
+# マージソート
 function mergeSort(){
     local f="$1" l="$2" m=;# f:first l:last m:mid
     ((l>f))||return 0;
@@ -147,16 +170,18 @@ function mergeSort(){
     mergeSort "$((m+1))" "$l"
     mergeSortLogic "$f" "$m" "$l";
 }
-
+#
+###############################################
+# シェルソート 1052mm
+# https://ja.wikipedia.org/wiki/シェルソート
+# https://www.youtube.com/watch?v=M9YCh-ZeC7Y
+#   平均計算時間が O(N((log N)/(log log N))^2)
+#   安定ソートではない
+#   挿入ソート改造版
+#   ３倍して１を足すという処理を要素を越えるまで行う
 ##
- # シェルソート 1052mm
- # https://ja.wikipedia.org/wiki/シェルソート
- # https://www.youtube.com/watch?v=M9YCh-ZeC7Y
- #   平均計算時間が O(N((log N)/(log log N))^2)
- #   安定ソートではない
- #   挿入ソート改造版
- #   ３倍して１を足すという処理を要素を越えるまで行う
-##
+# shellSort()
+# シェルソート
 function shellSort(){
   local s=1 in t;#s:shell in:inner t:temp
   while((s<nElems/3));do
@@ -175,19 +200,21 @@ function shellSort(){
     s=$(((s-1)/3));
   done
 }
-
+#
+###############################################
+# クイックソート 1131mm
+# https://ja.wikipedia.org/wiki/クイックソート
+# https://www.youtube.com/watch?v=aQiWF4E8flQ
+#   平均計算時間が O(n Log n)
+#   安定ソートではない
+#   最大計算時間が O(n^2)
+# データ数が 50 以下なら挿入ソート (Insertion Sort)
+# データ数が 5 万以下ならマージソート (Merge Sort)
+# データ数がそれより多いならクイックソート (Quick Sort)
 ##
- # クイックソート 1131mm
- # https://ja.wikipedia.org/wiki/クイックソート
- # https://www.youtube.com/watch?v=aQiWF4E8flQ
- #   平均計算時間が O(n Log n)
- #   安定ソートではない
- #   最大計算時間が O(n^2)
- # データ数が 50 以下なら挿入ソート (Insertion Sort)
- # データ数が 5 万以下ならマージソート (Merge Sort)
- # データ数がそれより多いならクイックソート (Quick Sort)
-##
-function quickSort() {
+# quickSort()
+# クイックソート
+function quickSort(){
   local -i l r m p t i j k;#r:right l:left m:middle p:part t:temp 
   ((l=i=$1,r=j=$2,m=(l+r)/2));
   p="${array[m]}";
@@ -216,38 +243,46 @@ function SortCase(){
 #  display;
   case "$2" in
     bubbleSort) 
-      echo "bubbleSort";
       bubbleSort;;
     selectionSort) 
-      echo "selectionSort";
       selectionSort;;
     insertionSort) 
-      echo "insertionSort";
       insertionSort;;
     mergeSort) 
-      echo "mergeSort";
       mergeSort 0 $((nElems-1));;
     shellSort) 
-      echo "shellSort";
       shellSort;;
     quickSort) 
-      echo "quickSort";
       quickSort 0 $((nElems-1));;
   esac
 #  display;
 }
-#
+##
+# ソート各種
+# 必要であればコメントアウトなどしてください。
 function Sort(){
+  echo -n "bubbleSort";
   time SortCase 1000 "bubbleSort";
+  echo "";
+  echo -n "selectionSort";
   time SortCase 1000 "selectionSort";
+  echo "";
+  echo -n "insertionSort";
   time SortCase 1000 "insertionSort";
+  echo "";
+  echo -n "mergeSort";
   time SortCase 1000 "mergeSort";
+  echo "";
+  echo -n "shellSort";
   time SortCase 1000 "shellSort";
+  echo "";
+  echo -n "quickSort";
   time SortCase 1000 "quickSort";
+  echo "";
 }
 
 ##
-# 実行は以下のコメントを外して実行
+# メイン
 Sort;
 exit;
 
